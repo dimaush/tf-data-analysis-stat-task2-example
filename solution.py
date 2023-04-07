@@ -1,17 +1,14 @@
-import pandas as pd
 import numpy as np
-
 from scipy.stats import norm
 
 
-chat_id = 123456 # Ваш chat ID, не меняйте название переменной
+chat_id = 337677338
 
 def solution(p: float, x: np.array) -> tuple:
-    # Измените код этой функции
-    # Это будет вашим решением
-    # Не меняйте название функции и её аргументы
+    n = x.shape[0]
     alpha = 1 - p
-    loc = x.mean()
-    scale = np.sqrt(np.var(x)) / np.sqrt(len(x))
-    return loc - scale * norm.ppf(1 - alpha / 2), \
-           loc - scale * norm.ppf(alpha / 2)
+    s = 0.026
+    x -= s
+    b0 = (n + 1) / n * np.amax(x)
+    return s + max( b0, 2 * (np.mean(x) - (np.var(x) / n) ** 0.5 * norm.ppf(1 - alpha / 2)) ), \
+           s + max( b0, 2 * (np.mean(x) - (np.var(x) / n) ** 0.5 * norm.ppf(alpha / 2)) )
